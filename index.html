@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which Old Testament Figure Are You?</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Decorative header -->
+        <div class="header-decor">
+            <h1>Which Old Testament Figure Are You?</h1>
+        </div>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+            <p id="progress-text">Question 1 of 10</p>
+        </div>
+        <div id="quiz">
+            <!-- Questions will be dynamically added by JavaScript -->
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+        <div id="result" class="hidden">
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Finding your Old Testament match...</p>
+            </div>
+            <div id="result-content" class="hidden">
+                <h2>Your Result</h2>
+                <div class="result-decor">
+                    <p id="result-text"></p>
+                </div>
+                <div id="score-breakdown">
+                    <h3>Score Breakdown</h3>
+                    <div id="breakdown-list"></div>
+                </div>
+                <button onclick="shareResult()">Share Your Result</button>
+                <button onclick="restartQuiz()">Take the Quiz Again</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
