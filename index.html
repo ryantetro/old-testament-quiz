@@ -3,42 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Which Old Testament Figure Are You?</title>
+    <title>Old Testament Interactive Experience</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Decorative header -->
-        <div class="header-decor">
-            <h1>Which Old Testament Figure Are You?</h1>
-        </div>
-        <div id="progress-container">
-            <div id="progress-bar"></div>
-            <p id="progress-text">Question 1 of 10</p>
-        </div>
-        <div id="quiz">
-            <!-- Questions will be dynamically added by JavaScript -->
-        </div>
-        <button id="next-btn" onclick="nextQuestion()">Next</button>
-        <div id="result" class="hidden">
-            <div id="loading" class="loading hidden">
-                <div class="spinner"></div>
-                <p>Finding your Old Testament match...</p>
+    <!-- Decorative Overlay -->
+    <div class="overlay" aria-hidden="true"></div>
+
+    <!-- Header Banner -->
+    <header class="banner" aria-label="Old Testament Interactive Experience Header">
+        <h1 style="text-align: center;">Old Testament Project</h1>
+    </header>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="container">
+        <div class="menu-options">
+            <div class="menu-option" data-action="quiz" role="button" tabindex="0" aria-label="Take the Personality Quiz">
+                <h2>Personality Quiz</h2>
+                <p>Discover which Old Testament figure you're most like!</p>
             </div>
-            <div id="result-content" class="hidden">
-                <h2>Your Result</h2>
-                <div class="result-decor">
-                    <p id="result-text"></p>
-                </div>
-                <div id="score-breakdown">
-                    <h3>Score Breakdown</h3>
-                    <div id="breakdown-list"></div>
-                </div>
-                <button onclick="shareResult()">Share Your Result</button>
-                <button onclick="restartQuiz()">Take the Quiz Again</button>
+            <div class="menu-option" data-action="timeline" role="button" tabindex="0" aria-label="Explore Character Timelines">
+                <h2>Character Timelines</h2>
+                <p>Explore the lives of Old Testament figures!</p>
             </div>
         </div>
     </div>
+
+    <!-- Character Selection Screen -->
+    <div id="character-selection" class="container hidden">
+        <h2>Select a Character</h2>
+        <div class="character-grid">
+            <div class="character-card" data-character="david" role="button" tabindex="0" aria-label="Select David">
+                <span class="character-icon" aria-hidden="true">🛡️</span>
+                <h3>David</h3>
+                <p>The Shepherd King</p>
+            </div>
+            <div class="character-card" data-character="moses" role="button" tabindex="0" aria-label="Select Moses">
+                <span class="character-icon" aria-hidden="true">🌊</span>
+                <h3>Moses</h3>
+                <p>The Deliverer</p>
+            </div>
+            <div class="character-card" data-character="esther" role="button" tabindex="0" aria-label="Select Esther">
+                <span class="character-icon" aria-hidden="true">👑</span>
+                <h3>Esther</h3>
+                <p>The Queen</p>
+            </div>
+            <div class="character-card" data-character="daniel" role="button" tabindex="0" aria-label="Select Daniel">
+                <span class="character-icon" aria-hidden="true">🦁</span>
+                <h3>Daniel</h3>
+                <p>The Prophet</p>
+            </div>
+            <div class="character-card" data-character="noah" role="button" tabindex="0" aria-label="Select Noah">
+                <span class="character-icon" aria-hidden="true">🕊️</span>
+                <h3>Noah</h3>
+                <p>The Ark Builder</p>
+            </div>
+            <div class="character-card" data-character="ruth" role="button" tabindex="0" aria-label="Select Ruth">
+                <span class="character-icon" aria-hidden="true">🌾</span>
+                <h3>Ruth</h3>
+                <p>The Loyal Daughter-in-law</p>
+            </div>
+            <div class="character-card" data-character="abraham" role="button" tabindex="0" aria-label="Select Abraham">
+                <span class="character-icon" aria-hidden="true">⭐</span>
+                <h3>Abraham</h3>
+                <p>The Father of Nations</p>
+            </div>
+            <div class="character-card" data-character="joseph" role="button" tabindex="0" aria-label="Select Joseph">
+                <span class="character-icon" aria-hidden="true">🌈</span>
+                <h3>Joseph</h3>
+                <p>The Dreamer</p>
+            </div>
+            <div class="character-card" data-character="sarah" role="button" tabindex="0" aria-label="Select Sarah">
+                <span class="character-icon" aria-hidden="true">👶</span>
+                <h3>Sarah</h3>
+                <p>The Mother of Nations</p>
+            </div>
+            <div class="character-card" data-character="samuel" role="button" tabindex="0" aria-label="Select Samuel">
+                <span class="character-icon" aria-hidden="true">🕯️</span>
+                <h3>Samuel</h3>
+                <p>The Prophet</p>
+            </div>
+        </div>
+        <button class="back-button" onclick="navigateTo('main-menu')" aria-label="Back to Main Menu">Back to Menu</button>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz-section" class="container hidden">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+            <div id="progress-text"></div>
+        </div>
+        <div id="quiz" role="region" aria-live="polite"></div>
+        <button id="next-btn" onclick="nextQuestion()" disabled aria-label="Next Question">Next</button>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result" class="container hidden">
+        <div id="loading" class="hidden">
+            <div class="spinner" aria-label="Loading Results"></div>
+        </div>
+        <div id="result-content" class="hidden">
+            <h2>Your Result</h2>
+            <div id="result-text" role="alert"></div>
+            <div id="breakdown-list"></div>
+            <!-- <button onclick="shareResult()" aria-label="Share Quiz Result">Share Result</button> -->
+            <button onclick="navigateTo('main-menu')" aria-label="Back to Main Menu">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <div id="timeline-section" class="container hidden">
+        <h2>Interactive Timeline</h2>
+        <div class="timeline-container">
+            <div class="timeline" role="region" aria-label="Character Timeline"></div>
+        </div>
+        <button onclick="navigateTo('main-menu')" class="back-button" aria-label="Back to Main Menu">Back to Menu</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

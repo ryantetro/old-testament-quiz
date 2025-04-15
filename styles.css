@@ -1,294 +1,564 @@
-/* Import Google Fonts for a scripture-inspired look */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto:wght@300;400&display=swap');
+/* Import Google Fonts for ancient and modern typography */
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cormorant+Garamond:wght@300;400;700&family=Roboto:wght@300;400&display=swap');
 
-/* General styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    background: url('https://www.transparenttextures.com/patterns/papyrus.png') repeat, linear-gradient(135deg, #f5e8c7 0%, #d9c7a3 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+/* Reset and general styles */
+* {
     margin: 0;
-    padding: 20px;
+    padding: 0;
     box-sizing: border-box;
 }
 
-/* Container styled like a parchment scroll */
-.container {
-    background: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png') repeat, #f5e8c7;
-    padding: 30px;
-    border-radius: 15px;
-    border: 3px solid #8b6f47;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(139, 111, 71, 0.3);
-    width: 90%;
-    max-width: 700px;
-    text-align: center;
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background: url('https://www.transparenttextures.com/patterns/old-wall.png') repeat, 
+                linear-gradient(135deg, #e6d3a3 0%, #b89c6b 100%);
+    min-height: 100vh;
+    padding: 20px;
     position: relative;
+    overflow-x: hidden;
+    color: #3c2f1e;
 }
 
-/* Decorative top and bottom borders to mimic a scroll */
+/* Animated dust particles for ambiance */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: url('https://www.transparenttextures.com/patterns/subtle-grunge.png');
+    opacity: 0.1;
+    animation: dust 20s linear infinite;
+}
+
+@keyframes dust {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100px); }
+}
+
+/* Hidden class */
+.hidden {
+    display: none !important;
+}
+
+/* Container styling (scroll-like) */
+.container {
+    background: url('https://www.transparenttextures.com/patterns/cream-pixels.png') repeat, 
+                #f2e8c9;
+    padding: 40px;
+    border-radius: 20px;
+    border: 4px solid #6b4e31;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 40px auto;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Scroll edge pseudo-elements */
 .container::before,
 .container::after {
     content: '';
     position: absolute;
     left: 0;
-    right: 0;
-    height: 20px;
-    background: linear-gradient(to right, #8b6f47, #d4af37, #8b6f47);
-    border-radius: 5px;
-}
-
-.container::before {
-    top: -3px;
-}
-
-.container::after {
-    bottom: -3px;
-}
-
-/* Heading styled like ancient inscriptions */
-h1 {
-    font-family: 'Cinzel', serif;
-    color: #4a3723;
-    font-size: 2.2em;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Progress container styled like a stone timeline */
-#progress-container {
     width: 100%;
+    height: 20px;
+    background: linear-gradient(to bottom, #6b4e31, transparent);
+    z-index: 1;
+}
+
+.container::before { top: 0; }
+.container::after { bottom: 0; transform: rotate(180deg); }
+
+/* Headings */
+h1, h2 {
+    font-family: 'Uncial Antiqua', serif;
+    color: #3c2f1e;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 2.8em;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px;
+    background: #d4af37;
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 25px;
+}
+
+/* Progress bar */
+#progress-container {
     background: #d9c7a3;
-    border: 2px solid #8b6f47;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 3px solid #6b4e31;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    padding: 5px;
 }
 
 #progress-bar {
-    height: 10px;
+    height: 12px;
     background: linear-gradient(to right, #d4af37, #8b6f47);
-    width: 0%;
-    border-radius: 3px;
-    transition: width 0.3s ease-in-out;
+    border-radius: 6px;
+    transition: width 0.4s ease-in-out;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #progress-text {
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9em;
-    color: #4a3723;
-    margin: 5px 0;
-}
-
-/* Questions styled with a subtle fade-in animation */
-.question {
-    font-family: 'Roboto', sans-serif;
-    margin: 20px 0;
-    font-size: 1.3em;
-    color: #4a3723;
-    animation: fadeIn 0.5s ease-in;
-}
-
-/* Options styled like stone tablets */
-.option {
-    display: block;
-    background: #d9c7a3;
-    margin: 10px auto;
-    padding: 12px;
-    width: 85%;
-    border: 2px solid #8b6f47;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
     font-size: 1em;
-    color: #4a3723;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #3c2f1e;
+    margin-top: 10px;
 }
 
-.option:hover {
+/* Quiz styles */
+.question {
+    font-size: 1.5em;
+    color: #3c2f1e;
+    margin: 30px 0;
+    animation: fadeIn 0.6s ease-in;
+}
+
+.option {
     background: #e6d5b8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15px auto;
+    padding: 15px;
+    width: 90%;
+    border: 3px solid #6b4e31;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #3c2f1e;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.option:hover, .option:focus {
+    background: #f2e8c9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .option.selected {
     background: linear-gradient(to right, #d4af37, #8b6f47);
     color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-color: #d4af37;
+    animation: glow 1s infinite alternate;
 }
 
-/* Buttons styled like ancient artifacts */
+@keyframes glow {
+    0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+    100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
+}
+
+/* Buttons */
 button {
-    background: linear-gradient(to bottom, #8b6f47, #6b4e31);
+    background: linear-gradient(to bottom, #8b6f47, #5c4033);
     color: #fff;
-    padding: 10px 20px;
-    border: 2px solid #4a3723;
-    border-radius: 8px;
+    padding: 12px 30px;
+    border: 3px solid #3c2f1e;
+    border-radius: 12px;
     cursor: pointer;
-    margin: 10px;
-    font-family: 'Cinzel', serif;
-    font-size: 1em;
-    transition: background 0.3s, transform 0.2s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-family: 'Uncial Antiqua', serif;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-button:hover {
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(212, 175, 55, 0.3);
+    transition: left 0.3s ease;
+}
+
+button:hover::before, button:focus::before {
+    left: 0;
+}
+
+button:hover, button:focus {
     background: linear-gradient(to bottom, #d4af37, #8b6f47);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 button:disabled {
     background: #a9a9a9;
+    border-color: #777;
     cursor: not-allowed;
     transform: none;
 }
 
-/* Hidden class */
-.hidden {
-    display: none;
-}
-
-/* Result section */
+/* Result styles */
 #result {
-    margin-top: 20px;
-    animation: fadeIn 0.5s ease-in;
+    margin-top: 30px;
 }
 
 #result-text {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2em;
-    color: #4a3723;
+    font-size: 1.3em;
+    color: #3c2f1e;
+    background: #f2e8c9;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #6b4e31;
+    animation: fadeIn 0.6s ease-in;
 }
 
 #result-text p {
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 #result-text strong {
     color: #8b6f47;
 }
 
-/* Score breakdown styled like an ancient ledger */
-#score-breakdown {
-    margin-top: 20px;
-    text-align: left;
-}
-
-#score-breakdown h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 1.2em;
-    color: #4a3723;
-    margin-bottom: 10px;
-}
-
 .breakdown-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 5px 0;
-    padding: 5px;
+    margin: 10px 0;
+    padding: 10px;
     background: #e6d5b8;
-    border: 1px solid #8b6f47;
-    border-radius: 5px;
+    border: 2px solid #6b4e31;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.breakdown-item:hover {
+    transform: translateX(5px);
 }
 
 .breakdown-item span {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1em;
-    color: #4a3723;
+    font-size: 1.1em;
+    color: #3c2f1e;
 }
 
-.breakdown-item .score-bar {
-    height: 10px;
+.score-bar {
+    height: 12px;
     background: linear-gradient(to right, #d4af37, #8b6f47);
-    border-radius: 5px;
-    transition: width 0.5s ease-in-out;
+    border-radius: 6px;
+    transition: width 0.6s ease-in-out;
 }
 
-/* Loading spinner styled like a spinning ancient coin */
-.loading {
+/* Loading spinner */
+#loading {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 200px;
+    align-items: center;
+    min-height: 200px;
 }
 
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #e6d5b8;
-    border-top: 4px solid #8b6f47;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #e6d5b8;
+    border-top: 5px solid #8b6f47;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: spin 1.2s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    to { transform: rotate(360deg); }
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Timeline styles */
+.timeline-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 30px;
+    background: url('https://www.transparenttextures.com/patterns/sandpaper.png') repeat, 
+                linear-gradient(135deg, #f2e8c9 0%, #d9c7a3 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
-/* Header decoration */
-.header-decor {
-    background: linear-gradient(to bottom, #d9c7a3, #e6d5b8);
-    padding: 10px;
-    border: 2px solid #8b6f47;
-    border-radius: 10px;
+.timeline {
+    position: relative;
+    padding: 40px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background: linear-gradient(to bottom, #8b6f47, #3c2f1e);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+    border-radius: 3px;
+}
+
+.timeline-event {
+    padding: 30px;
+    background: #f2e8c9;
+    width: 48%;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    border: 3px solid #6b4e31;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.timeline-event:nth-child(odd) { left: 0; }
+.timeline-event:nth-child(even) { left: 52%; }
+
+.timeline-event::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #d4af37;
+    border: 3px solid #6b4e31;
+    border-radius: 50%;
+    top: 30px;
+    right: -15px;
+    transition: transform 0.3s ease;
+}
+
+.timeline-event:hover::after {
+    transform: scale(1.2);
+}
+
+.timeline-event:nth-child(even)::after { left: -15px; }
+
+.timeline-year {
+    font-family: 'Uncial Antiqua', serif;
+    color: #8b6f47;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.timeline-event-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #3c2f1e;
+    font-weight: 700;
+}
+
+.timeline-description {
     margin-bottom: 20px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    color: #5c4033;
+    line-height: 1.6;
 }
 
-/* Result decoration */
-.result-decor {
+.timeline-reference {
+    font-style: italic;
+    color: #777;
+    font-size: 0.95em;
+    padding: 8px 12px;
     background: #e6d5b8;
-    padding: 15px;
-    border: 2px dashed #8b6f47;
-    border-radius: 10px;
-    margin: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
 }
 
-/* Highlight the top scorer in the breakdown */
-.breakdown-item:first-child {
-    background: linear-gradient(to right, #d4af37, #e6d5b8);
-    border: 2px solid #8b6f47;
-    font-weight: bold;
+/* Minigame styles */
+.minigame-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f2e8c9 0%, #d9c7a3 100%);
+    border-radius: 15px;
+    border: 3px solid #6b4e31;
 }
 
-.breakdown-item:first-child span {
-    color: #4a3723;
+.minigame-container {
+    background: #e6d5b8;
+    border-radius: 15px;
+    padding: 30px;
+    min-height: 500px;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Ensure hidden class works for loading and result-content */
-#loading.hidden {
-    display: none !important;
+.minigame-container p {
+    text-align: center;
+    color: #5c4033;
+    font-size: 1.2em;
 }
 
-#result-content.hidden {
-    display: none !important;
+.play-minigame-btn, #back-to-timeline {
+    background: linear-gradient(135deg, #d4af37, #8b6f47);
+    border: 3px solid #3c2f1e;
+    padding: 12px 30px;
+    border-radius: 15px;
+    font-family: 'Uncial Antiqua', serif;
 }
 
-/* Ensure loading div is visible when not hidden */
-#loading {
-    display: flex;
+.play-minigame-btn:hover, #back-to-timeline:hover,
+.play-minigame-btn:focus, #back-to-timeline:focus {
+    background: linear-gradient(135deg, #8b6f47, #5c4033);
+    transform: translateY(-3px);
 }
 
-/* Ensure result-content is visible when not hidden */
-#result-content {
-    display: block;
+/* Minigame-specific backgrounds */
+.goliath-game { background: linear-gradient(135deg, #a89c6b 0%, #d9c7a3 100%); }
+.burning-bush-game { background: linear-gradient(135deg, #ff8c00 0%, #b22222 100%); }
+.red-sea-game { background: linear-gradient(135deg, #1e90ff 0%, #4682b4 100%); }
+
+/* Main menu */
+#main-menu {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 60px 20px;
+    text-align: center;
+    background: url('https://www.transparenttextures.com/patterns/cream-pixels.png') repeat, 
+                #f2e8c9;
+    border-radius: 20px;
+    border: 4px solid #6b4e31;
+}
+
+.menu-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    padding: 20px;
+}
+
+.menu-option {
+    background: #e6d5b8;
+    padding: 40px;
+    border-radius: 15px;
+    border: 3px solid #6b4e31;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.menu-option:hover, .menu-option:focus {
+    transform: translateY(-10px);
+    background: #f2e8c9;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.menu-option h2 {
+    color: #8b6f47;
+    margin-bottom: 20px;
+    font-family: 'Uncial Antiqua', serif;
+}
+
+.menu-option p {
+    color: #5c4033;
+    font-size: 1.2em;
+}
+
+/* Character selection */
+#character-selection {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 60px 20px;
+    text-align: center;
+    background: url('https://www.transparenttextures.com/patterns/cream-pixels.png') repeat, 
+                #f2e8c9;
+    border-radius: 20px;
+    border: 4px solid #6b4e31;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.character-card {
+    background: #e6d5b8;
+    padding: 30px;
+    border-radius: 15px;
+    border: 3px solid #6b4e31;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.character-card:hover, .character-card:focus {
+    transform: translateY(-5px);
+    background: #f2e8c9;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.character-card h3 {
+    color: #8b6f47;
+    margin-bottom: 15px;
+    font-family: 'Uncial Antiqua', serif;
+}
+
+.character-card p {
+    color: #5c4033;
+    font-size: 1em;
+}
+
+/* Back button */
+.back-button {
+    background: linear-gradient(135deg, #d4af37, #8b6f47);
+    border: 3px solid #3c2f1e;
+    padding: 12px 30px;
+    border-radius: 15px;
+    font-family: 'Uncial Antiqua', serif;
+}
+
+.back-button:hover, .back-button:focus {
+    background: linear-gradient(135deg, #8b6f47, #5c4033);
+    transform: translateY(-3px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 10px;
+    }
+    .timeline-event {
+        width: 85%;
+        left: 20px !important;
+    }
+    .timeline-event::after {
+        left: -15px !important;
+    }
+    .menu-options, .character-grid {
+        grid-template-columns: 1fr;
+    }
+    .container {
+        padding: 20px;
+        margin: 20px;
+    }
+    h1 { font-size: 2.2em; }
+    h2 { font-size: 1.6em; }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
 }
